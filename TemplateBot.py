@@ -19,21 +19,21 @@ logging.basicConfig(
     datefmt='%H:%M:%S',
     )
 
-async def scheduler():
-    #Сообщить, что бот запустился
-    print(datetime.today().replace(microsecond=0))
-    await botsendmes(f'{datetime.today().replace(microsecond=0)}')
-    #Если нужно регулярно выполнять какие-нибудь действия или отправлять сообщения
-    aioschedule.every().day.at("09:00").do(botstart) #В 9.00
-    for i in startls: aioschedule.every().day.at(f"{i}:05").do(botsendmessage) #В другое указанное в списке время
-
-    while True:
-        await aioschedule.run_pending()
-        await asyncio.sleep(1)
-
-async def on_startup(x):
-    asyncio.create_task(scheduler())
+# async def scheduler():
+#     #Сообщить, что бот запустился
+#     print(datetime.today().replace(microsecond=0))
+#     await botsendmes(f'{datetime.today().replace(microsecond=0)}')
+#     #Если нужно регулярно выполнять какие-нибудь действия или отправлять сообщения
+#     aioschedule.every().day.at("09:00").do(botstart) #В 9.00
+#     for i in startls: aioschedule.every().day.at(f"{i}:05").do(botsendmessage) #В другое указанное в списке время
+#
+#     while True:
+#         await aioschedule.run_pending()
+#         await asyncio.sleep(1)
+#
+# async def on_startup(x):
+#     asyncio.create_task(scheduler())
 
 if __name__ == "__main__":
     from TemplateBot_function import *
-    executor.start_polling(dp, skip_updates=False, on_startup=on_startup)
+    executor.start_polling(dp, skip_updates=False)

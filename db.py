@@ -32,6 +32,14 @@ class BotDB:
     #     result = self.cursor.execute(f"SELECT s_amount FROM sugar WHERE users_id == ? AND food == ?", (user_id,))
     #     return result.fetchone()[0]
 
+    def add_sugar_g(self, user_id, sugar):
+        self.cursor.execute(f"UPDATE users SET sugar == sugar + ? WHERE user_id == ?", (sugar, user_id))
+        return self.conn.commit()
+
+    def get_sugar_g(self, user_id):
+        result = self.cursor.execute('SELECT `sugar` FROM `users` WHERE `user_id` = ?', (user_id,))
+        return result.fetchone()[0]
+
     def get_gender_processed(self, user_id):
         result = self.cursor.execute(f"SELECT gender FROM users WHERE user_id == ?", (user_id,))
         return result.fetchone()[0]
@@ -39,6 +47,13 @@ class BotDB:
     def get_age_processed(self, user_id):
         result = self.cursor.execute(f"SELECT age FROM users WHERE user_id == ?", (user_id,))
         return result.fetchone()[0]
+
+
+
+    def clean_sug(self, user_id, sugar):
+        self.cursor.execute(f"UPDATE users SET sugar == ? WHERE user_id == ?", (sugar, user_id))
+        return self.conn.commit()
+
 
     def close(self):
         self.conn.close()
